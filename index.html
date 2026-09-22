@@ -65,10 +65,43 @@ footer{margin:28px 0 36px;font-size:12px;color:var(--muted)}
 <header><div class="wrap">
   <div class="brand">Kuwala Analytics · Case study</div>
   <h1>Hotel Reservation </h1>
-  <p>A hotel's reservation log of 700 bookings (arrivals in 2017 and 2018) was analysed in MySQL. Use the filters to explore.</p>
+   <p>Hotel reservations analysed in MySQL. Use the filters to explore more.</p>
 </div></header>
 
 <main class="wrap">
+    <section class="card" style="margin:20px 0 0">
+    <h2>About this study</h2>
+    <p class="sub">An independent Kuwala Analytics study of 700 hotel reservations of guest arrivals from 2017 to 2018</p>
+    <p>The brief was 15 standard questions on bookings, guests and room types. The more useful question sat underneath them: which bookings cancel, and what does that cost? <b>29.6% of bookings were cancelled</b>, holding <b>35.4% of booked value</b>. Almost all of them were online bookings made far in advance. The filters below let you test that for yourself.</p>
+
+    <details style="margin-top:12px">
+      <summary style="cursor:pointer;font-weight:600;color:var(--dark)">Method, findings and limits</summary>
+
+      <h3 style="font-size:14px;margin:14px 0 4px">Method</h3>
+      <ul>
+        <li>Worked on a copy of the raw table and converted <code>arrival_date</code> from text to a DATE column.</li>
+        <li>23 MySQL queries: 15 answering the brief, 8 built for the cancellation analysis using CASE bucketing, CTEs and window functions.</li>
+        <li>Every query was run end to end in MariaDB, and each published figure was re-derived independently before it went on this page.</li>
+        <li>This dashboard is a single self-contained HTML file. All 700 rows and the charting code are inlined, so the filters run in the browser with no server behind them.</li>
+      </ul>
+
+      <h3 style="font-size:14px;margin:14px 0 4px">What the data showed</h3>
+      <ul>
+        <li><b>29.6% of bookings were cancelled</b> (207 of 700), holding 35.4% of booked value (nights x room price).</li>
+        <li><b>Channel is the strongest signal.</b> Online cancels at 39.6%, Corporate at 3.7%, Offline at 0%. Online accounts for 205 of the 207 cancellations.</li>
+        <li><b>Risk climbs with lead time.</b> 9.9% within a week of arrival, rising to 73.1% at 181 days or more. Cancelled bookings were made 137 days ahead on average, against 61 days for bookings that were kept.</li>
+        <li><b>The two effects compound.</b> Online bookings made more than 90 days ahead cancel 65.4% of the time (185 bookings).</li>
+      </ul>
+
+      <h3 style="font-size:14px;margin:14px 0 4px">What this study cannot tell you</h3>
+      <ul>
+        <li>Booked value is estimated from nights and room price. The dataset holds no payments, so this is revenue at risk, not cash lost.</li>
+        <li>2017 arrivals cancel far less often than 2018 arrivals. That may be a real shift or an artefact of the sample, so the two years should not be compared without checking with the data owner.</li>
+        <li>Aviation (1 booking) and room types 5 to 7 (under 20 each) are too small to support conclusions.</li>
+        <li>The data shows what cancelled, not why. Guest intent, competitor pricing and the hotel's own cancellation policy are all absent.</li>
+      </ul>
+    </details>
+  </section>
   <div class="filters">
     <label>Market segment<select id="fSeg"></select></label>
     <label>Arrival year<select id="fYear"></select></label>
@@ -120,7 +153,7 @@ footer{margin:28px 0 36px;font-size:12px;color:var(--muted)}
       <p class="small">Caveats: booked value = nights × average room price (an estimate; no payment data). Aviation (1 booking) and room types 5 to 7 are small samples. 2017 arrivals cancel much less than 2018 arrivals, which may reflect how the sample was drawn.</p>
     </div>
   </section>
-  <footer>Source and licence. Hotel Reservations dataset (700 rows), released under the MIT License. Copyright (c) 2013 Mark Otto. Copyright (c) 2017 Andrew Fong. Attribution appears in the footer of every published deliverable. All cleaning, querying, analysis and visualisation are original work by Kuwala Analytics.</footer>
+  <footer>Source and licence: Hotel Reservations dataset, MIT License (Copyright (c) 2013 Mark Otto; Copyright (c) 2017 Andrew Fong). Analysis and visuals are original work by Kuwala Analytics.</footer>
 </main>
 
 <script>
